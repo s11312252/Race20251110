@@ -28,20 +28,26 @@ fun GameScreen(message: String, gameViewModel: GameViewModel) {
                 }
             }
         ) {
-            // 繪製圓形
+            // *** 修改：使用 ViewModel 中的座標來繪製圓形 ***
             drawCircle(
                 color = Color.Red,
                 radius = 100f,
-                center = Offset(100f, 100f)
+                center = Offset(gameViewModel.circleX, gameViewModel.circleY)
             )
         }
 
+        // *** 修改：顯示您的姓名和分數 ***
+        Text(text = message + "\n"
+                + "螢幕尺寸: " + gameViewModel.screenWidthPx.toString() + " x "
+                + gameViewModel.screenHeightPx.toString() + "\n"
+                + "目前分數: " + gameViewModel.score.toString())
 
-        Text(text = message + gameViewModel.screenWidthPx.toString() + "*"
-                + gameViewModel.screenHeightPx.toString())
-
-        Button(onClick = {gameViewModel.gameRunning = true
-        gameViewModel.StartGame()
+        Button(onClick = {
+            // 確保遊戲只啟動一次
+            if (!gameViewModel.gameRunning) {
+                gameViewModel.gameRunning = true
+                gameViewModel.StartGame()
+            }
         }) {
             Text(text = "遊戲開始")
         }
