@@ -23,29 +23,22 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        //強迫橫式螢幕
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)
 
-        // 隱藏狀態列：獲取 WindowInsetsController，再隱藏statusBars
         val windowInsetsController = WindowCompat.getInsetsController(window, window.decorView)
         windowInsetsController.hide(WindowInsetsCompat.Type.statusBars())
 
-        //隱藏下方巡覽列
         windowInsetsController.hide(WindowInsetsCompat.Type.navigationBars())
 
-        // 確保內容延伸到至邊緣
         WindowCompat.setDecorFitsSystemWindows(
             window, false)
 
-        // 步驟 1: 獲取 WindowMetricsCalculator 實例
         val windowMetricsCalculator =
             WindowMetricsCalculator.getOrCreate()
 
-        // 步驟 2: 計算當前視窗的 WindowMetrics
         val currentWindowMetrics=
             windowMetricsCalculator.computeCurrentWindowMetrics(this)
 
-        // 步驟 3: 從 bounds 獲取像素尺寸
         val bounds = currentWindowMetrics.bounds
 
         val screenWidthPx = bounds.width().toFloat()
@@ -56,7 +49,6 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             RaceTheme {
-                // *** 變更 1: 修改標題文字 ***
                 GameScreen(message="賽馬遊戲(作者：陳芯霈)", gameViewModel)
             }
         }

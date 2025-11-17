@@ -1,7 +1,6 @@
 package tw.edu.pu.csim.tcyang.race
 
 class Horse(n: Int) {
-    // Horse 的初始 Y 位置是根據 n 計算的
     var horseX = 0
     var horseY = 100+ 220 * n
 
@@ -13,8 +12,8 @@ class Horse(n: Int) {
      */
     fun Reset(n: Int) {
         horseX = 0
-        horseY = 100 + 220 * n // 重設到初始 Y 軸位置
-        number = 0 // 重設動畫幀數
+        horseY = 100 + 220 * n
+        number = 0
     }
 
     fun HorseRun(){

@@ -4,10 +4,17 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
@@ -16,6 +23,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
+import androidx.compose.ui.unit.dp
 
 @Composable
 fun GameScreen(message: String, gameViewModel: GameViewModel) {
@@ -55,13 +63,11 @@ fun GameScreen(message: String, gameViewModel: GameViewModel) {
             }
         }
 
-        // 顯示遊戲標題、螢幕尺寸和分數
         var displayMessage = message + "\n" +
                 "螢幕尺寸: " + gameViewModel.screenWidthPx.toString() + " x " +
                 gameViewModel.screenHeightPx.toString() + "\n" +
                 "目前分數: " + gameViewModel.score.toString()
 
-        // *** 變更 2: 顯示獲勝訊息 ***
         if (gameViewModel.winnerNumber != 0) {
             displayMessage += "\n第 ${gameViewModel.winnerNumber} 馬獲勝!"
         }
@@ -69,13 +75,20 @@ fun GameScreen(message: String, gameViewModel: GameViewModel) {
         Text(text = displayMessage)
 
         Button(onClick = {
-            // 確保遊戲只啟動一次
             if (!gameViewModel.gameRunning) {
                 gameViewModel.gameRunning = true
                 gameViewModel.StartGame()
             }
         }) {
             Text(text = "遊戲開始")
+            var user by remember { mutableStateOf("") }
+            TextField(
+                value = user,
+                onValueChange = { user = it },
+                label = { Text("賽馬") },
+                placeholder = { Text("猜猜哪匹馬會贏") }
+            )
+            Text("您預測的馬匹是：$user")
         }
     }
 }
