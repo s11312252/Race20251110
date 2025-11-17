@@ -20,7 +20,15 @@ import androidx.compose.ui.unit.IntSize
 @Composable
 fun GameScreen(message: String, gameViewModel: GameViewModel) {
 
-    val imageBitmap = ImageBitmap.imageResource(R.drawable.horse0)
+    //val imageBitmap = ImageBitmap.imageResource(R.drawable.horse0)
+
+    val imageBitmaps = listOf(
+        ImageBitmap.imageResource(R.drawable.horse0),
+        ImageBitmap.imageResource(R.drawable.horse1),
+        ImageBitmap.imageResource(R.drawable.horse2),
+        ImageBitmap.imageResource(R.drawable.horse3)
+    )
+
 
 
     Box(modifier = Modifier
@@ -42,9 +50,11 @@ fun GameScreen(message: String, gameViewModel: GameViewModel) {
             )
 
             drawImage(
-                    image = imageBitmap,
-                    dstOffset = IntOffset(0, 100),
-                    dstSize = IntSize(300, 300)
+                    image = imageBitmaps[gameViewModel.horse.number],
+                dstOffset = IntOffset(
+                    gameViewModel.horse.horseX,
+                    gameViewModel.horse.horseY),
+                dstSize = IntSize(200, 200)
             )
         }
 
