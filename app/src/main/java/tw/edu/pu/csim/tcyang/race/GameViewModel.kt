@@ -26,39 +26,47 @@ class GameViewModel: ViewModel() {
     var score by mutableStateOf(0)
         private set
 
-    val horse = Horse()
+    //val horse = Horse()
+    val horses = mutableListOf<Horse>()
 
 
     fun SetGameSize(w: Float, h: Float) {
         screenWidthPx = w
         screenHeightPx = h
     }
+
     fun StartGame() {
         circleX = 100f
         circleY = screenHeightPx - 100f
+
+        for (i in 0..2) {
+            horses.add(Horse(i))
+        }
+
 
         viewModelScope.launch {
             while (gameRunning) {
                 delay(100)
                 circleX += 10
 
-                if (circleX >= screenWidthPx - 100f){
+                if (circleX >= screenWidthPx - 100f) {
                     score++
                     circleX = 100f
                 }
 
-                horse.HorseRun()
-                if (horse.horseX >= screenWidthPx - 300){
-                    horse.horseX = 0
+                for (i in 0..2) {
+                    horses[i].HorseRun()
+                    if (horses[i].horseX >= screenWidthPx - 200) {
+                        horses[i].horseX = 0
+                    }
                 }
-
             }
         }
     }
-
     fun MoveCircle(x: Float, y: Float) {
         circleX += x
         circleY += y
     }
-
 }
+
+
